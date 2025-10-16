@@ -1,8 +1,10 @@
+# main.py
 import pygame
 from game.game_engine import GameEngine
 
 # Initialize pygame/Start application
 pygame.init()
+pygame.mixer.init()
 
 # Screen dimensions
 WIDTH, HEIGHT = 800, 600
@@ -27,6 +29,21 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            
+            # --- New Logic for Task 3: Replay Input ---
+            if engine.game_over and event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False # Exit the game
+                elif event.key == pygame.K_3:
+                    engine.set_winning_score(3)
+                    engine.reset_game()
+                elif event.key == pygame.K_5:
+                    engine.set_winning_score(5)
+                    engine.reset_game()
+                elif event.key == pygame.K_7:
+                    engine.set_winning_score(7)
+                    engine.reset_game()
+            # -------------------------------------------
 
         engine.handle_input()
         engine.update()
